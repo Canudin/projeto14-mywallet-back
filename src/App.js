@@ -44,6 +44,11 @@ server.post("/", async (req, res) => {
   }
 });
 
+server.get("/", async (req, res)=>{
+  const {authorization} = req.headers;
+  const token = authorization?.replace("Bearer ", "")
+})
+
 server.post("/cadastro", async (req, res) => {
   const userSignInValue = req.body;
   const { name, email, password } = req.body;
