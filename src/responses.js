@@ -50,14 +50,10 @@ export async function postLogin(req, res) {
 export async function getUserInfo(req, res) {
   const { authorization } = req.headers;
   const token = authorization?.replace("Bearer ", "");
-  console.log(typeof token);
   if (!token) return res.sendStatus(401);
-  const userSession = await db.collection(collections.usersSessions).findOne({ token });
-  console.log(userSession);
+  const userSession = await db.collection(collections.usersSessions).findOne({token});
   if (!userSession) return res.sendStatus(401);
-
-  const user = await db.collection(collections.registeredUsers).findOne({ _id: userSession.userID });
-
+  const user = await db.collection(collections.registeredUsers).findOne({ _id: userSession.userId });
   if (user) {
     delete user.password;
     console.log(user);
